@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>June Sheet — CTA/Icon Review Dashboard</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --card-bg: #ffffff;
+    --border: #e3e6eb;
+    --text: #1f2328;
+    --muted: #6b7280;
+    --accent: #76b900;
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.04);
+    --confirmed-bg: #e6f4d7;
+    --confirmed-text: #3f6b00;
+    --suggested-bg: #fff4d6;
+    --suggested-text: #8a5a00;
+    --blank-bg: #ececec;
+    --blank-text: #555;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.45;
+  }
+  header {
+    max-width: 1400px;
+    margin: 0 auto 20px auto;
+  }
+  h1 {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .legend .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .legend .chip.confirmed { background: var(--confirmed-bg); color: var(--confirmed-text); }
+  .legend .chip.suggested { background: var(--suggested-bg); color: var(--suggested-text); }
+  .legend .chip.blank     { background: var(--blank-bg);     color: var(--blank-text); }
+
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .priority-section {
+    margin-bottom: 26px;
+  }
+  .priority-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .priority-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .priority-header .sub {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  @media (max-width: 900px) {
+    .row { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 220px;
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+  .badge.confirmed { background: var(--confirmed-bg); color: var(--confirmed-text); }
+  .badge.suggested { background: var(--suggested-bg); color: var(--suggested-text); }
+  .badge.blank     { background: var(--blank-bg);     color: var(--blank-text); }
+
+  .card-body {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .icon-wrap {
+    flex: 0 0 96px;
+    width: 96px;
+    text-align: center;
+  }
+  .icon-wrap img {
+    width: 96px;
+    height: auto;
+    border-radius: 6px;
+    background: #fafafa;
+    border: 1px solid var(--border);
+    object-fit: contain;
+    display: block;
+  }
+  .icon-fallback {
+    width: 96px;
+    height: 96px;
+    border: 1px dashed #c8c8c8;
+    border-radius: 6px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 11px;
+    text-align: center;
+    padding: 4px;
+    background: #fafafa;
+    box-sizing: border-box;
+    line-height: 1.3;
+  }
+  .icon-fallback.pending {
+    border-color: #e0c270;
+    background: #fffaf0;
+    color: #8a5a00;
+  }
+  .reco {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px dashed #d0d7e0;
+    background: #f5faef;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #2d3748;
+  }
+  .reco-head {
+    font-weight: 700;
+    color: #4a7d00;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 10.5px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .reco-conf {
+    font-size: 9.5px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .reco-conf.high   { background: #cfe9a8; color: #3f6b00; }
+  .reco-conf.medium { background: #fff0b8; color: #8a5a00; }
+  .reco-conf.low    { background: #f7d1d1; color: #8a2c2c; }
+  .reco-file {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    color: #1f2328;
+    word-break: break-all;
+    margin: 2px 0 4px 0;
+  }
+  .reco-why {
+    color: #4a5568;
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+  .icon-file {
+    margin-top: 6px;
+    font-size: 10.5px;
+    color: var(--muted);
+    word-break: break-all;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .card-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: var(--text);
+  }
+  .card-snippet {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 0 0 8px 0;
+  }
+  .card-link {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    transition: background 0.15s ease;
+  }
+  .card-link:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+  .card-link.disabled {
+    color: #aaa;
+    border-color: #ddd;
+    pointer-events: none;
+  }
+  .url-fallback {
+    font-size: 10px;
+    color: var(--muted);
+    word-break: break-all;
+    margin-top: 6px;
+    display: none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>June Sheet — CTA/Icon Review Dashboard</h1>
+  <div class="legend">
+    <span class="chip confirmed">Confirmed — copied from PMM icon mapping</span>
+    <span class="chip suggested">Suggested — inferred icon match</span>
+    <span class="chip blank">Blank — no CTA/icon yet</span>
+  </div>
+</header>
+  <p style="max-width:1400px;margin:0 auto 16px auto;font-size:13px;color:#4a5568;">
+    Hosted on GitHub Pages. Each icon below is also reachable as a direct PNG URL:
+    <code style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:#eef2f5;padding:2px 6px;border-radius:4px;">https://snehald-png.github.io/cta-icons-june/icons/tk-v2-s&lt;N&gt;-c&lt;M&gt;-0226.png</code>
+  </p>
+
+<main id="dashboard"></main>
+
+<script>
+const DATA = [
+  {"priority":"P1","ctas":[
+    {"label":"CTA 1","title":"Isaac Lab Arena","snippet":"Simulation policy evaluation and large-scale robot learning workflows.","link":"https://developer.nvidia.com/isaac/lab-arena","icon_url":"icons/tk-v2-s1-c1-0226.png","icon_file":"tk-v2-s1-c1-0226.png","status":"Confirmed","reco":{"file":"m48-simulation-2-256px-grn.png","why":"Monitor showing target+trajectory — represents policy evaluation in simulation.","conf":"medium"}},
+    {"label":"CTA 2","title":"Isaac Teleop","snippet":"Robot data collection and teleoperation workflows.","link":"https://nvidia.github.io/IsaacTeleop/main/index.html","icon_url":"icons/tk-v2-s1-c2-0226.png","icon_file":"tk-v2-s1-c2-0226.png","status":"Confirmed","reco":{"file":"m48-robot-mimic-256px-grn.png","why":"Literally a robot-imitation icon — matches teleop / mimicking learning.","conf":"high"}},
+    {"label":"CTA 3","title":"Isaac Sim on Brev","snippet":"Cloud setup guide for running Isaac Sim on Brev.","link":"https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_advanced_cloud_setup_brev.html","icon_url":"icons/tk-v2-s1-c3-0226.png","icon_file":"tk-v2-s1-c3-0226.png","status":"Confirmed","reco":{"file":"m48-virtual-pc-cloud-computer-256px-grn.png","why":"Cloud + screen = running a sim/workstation in the cloud (Brev).","conf":"medium"}}
+  ]},
+  {"priority":"P2","ctas":[
+    {"label":"CTA 1","title":"Cosmos Cookbook","snippet":"World foundation models, guardrails, and data pipelines for physical AI.","link":"https://nvidia-cosmos.github.io/cosmos-cookbook/index.html","icon_url":"icons/tk-v2-s2-c1-0226.png","icon_file":"tk-v2-s2-c1-0226.png","status":"Confirmed","reco":{"file":"m48-foundational-model-cognition-256px-grn.png","why":"Foundation-model-thinking icon — matches WFM physical AI reasoning.","conf":"high"}},
+    {"label":"CTA 2","title":"Omniverse NuRec","snippet":"Turns camera and lidar captures into 3D simulation environments.","link":"https://docs.nvidia.com/nurec/","icon_url":"icons/tk-v2-s2-c2-0226.png","icon_file":"tk-v2-s2-c2-0226.png","status":"Confirmed","reco":{"file":"m48-nvidia-omniverse-256px-grn.png","why":"NVIDIA Omniverse-branded swirl — NuRec is an Omniverse product.","conf":"high"}},
+    {"label":"CTA 3","title":"IGX Thor","snippet":"Edge AI for industrial, medical, and robotics applications.","link":"https://developer.nvidia.com/blog/nvidia-igx-thor-powers-industrial-medical-and-robotics-edge-ai-applications/","icon_url":"icons/tk-v2-s2-c3-0226.png","icon_file":"tk-v2-s2-c3-0226.png","status":"Confirmed","reco":{"file":"m48-igx-256px-grn.png","why":"Literally the IGX module icon.","conf":"high"}}
+  ]},
+  {"priority":"P3","ctas":[
+    {"label":"CTA 1","title":"Physical AI with Cosmos","snippet":"Scalable synthetic data generation for physical AI.","link":"https://developer.nvidia.com/blog/how-to-scale-data-generation-for-physical-ai-with-the-nvidia-cosmos-cookbook/","icon_url":"icons/tk-v2-s3-c1-0226.png","icon_file":"tk-v2-s3-c1-0226.png","status":"Confirmed","reco":{"file":"m48-bootstrapping-computer-vision-models-with-synthetic-data-256px-grn.png","why":"Literally the synthetic-data-for-CV icon.","conf":"high"}},
+    {"label":"CTA 2","title":"Video Agents with VSS","snippet":"Searchable and actionable video intelligence with AI agents.","link":"https://developer.nvidia.com/blog/transform-video-into-instantly-searchable-actionable-intelligence-with-ai-agents-and-skills/","icon_url":"icons/tk-v2-s3-c2-0226.png","icon_file":"tk-v2-s3-c2-0226.png","status":"Confirmed","reco":{"file":"m48-data-transformation-augmentation-video-256px-grn.png","why":"Video-with-arrow icon — matches video agents/skills transforming footage.","conf":"high"}},
+    {"label":"CTA 3","title":"DeepStream Coding Agents","snippet":"Build vision AI pipelines faster using coding agents.","link":"https://developer.nvidia.com/blog/how-to-build-vision-ai-pipelines-using-deepstream-coding-agents/","icon_url":"icons/tk-v2-s3-c3-0226.png","icon_file":"tk-v2-s3-c3-0226.png","status":"Confirmed","reco":{"file":"m48-deep-stream-256px-grn.png","why":"Literally named for DeepStream.","conf":"high"}}
+  ]},
+  {"priority":"P4","ctas":[
+    {"label":"CTA 1","title":"Alpamayo","snippet":"Closed-loop post-training for autonomous vehicle models.","link":"https://developer.nvidia.com/blog/how-to-post-train-autonomous-vehicle-models-in-closed-loop-with-nvidia-alpamayo/","icon_url":"icons/tk-v2-s4-c1-0226.png","icon_file":"tk-v2-s4-c1-0226.png","status":"Confirmed","reco":{"file":"m48-autonomous-car-side-256px-grn.png","why":"Car with sensor waves — autonomous vehicle.","conf":"high"}},
+    {"label":"CTA 2","title":"Cosmos WFM","snippet":"Physical AI platform using world foundation models.","link":"https://www.nvidia.com/en-eu/ai/cosmos/","icon_url":"icons/tk-v2-s4-c2-0226.png","icon_file":"tk-v2-s4-c2-0226.png","status":"Confirmed","reco":{"file":"m48-gen-ai-256px-grn.png","why":"Triangle → NN → square = Cosmos generates worlds from inputs.","conf":"medium"}},
+    {"label":"CTA 3","title":"DRIVE Radar Processing","snippet":"Centralized radar processing for safer Level 4 autonomy.","link":"https://developer.nvidia.com/blog/how-centralized-radar-processing-on-nvidia-drive-enables-safer-smarter-level-4-autonomy/","icon_url":"icons/tk-v2-s4-c3-0226.png","icon_file":"tk-v2-s4-c3-0226.png","status":"Confirmed","reco":{"file":"m48-radar-256px-grn.png","why":"Concentric arcs — literally a radar icon.","conf":"high"}}
+  ]},
+  {"priority":"P5","ctas":[
+    {"label":"CTA 1","title":"NVIDIA Warp","snippet":"Accelerated computational physics code for AI.","link":"https://developer.nvidia.com/blog/build-accelerated-differentiable-computational-physics-code-for-ai-with-nvidia-warp/","icon_url":"icons/tk-v2-s5-c1-0226.png","icon_file":"tk-v2-s5-c1-0226.png","status":"Confirmed","reco":{"file":"m48-physics-physx-256px-grn.png","why":"Lever-and-fulcrum — physics simulation.","conf":"high"}},
+    {"label":"CTA 2","title":"PhysicsNeMo for TCAD","snippet":"AI physics for technology computer-aided design simulations.","link":"https://developer.nvidia.com/blog/using-ai-physics-for-technology-computer-aided-design-simulations/","icon_url":"icons/tk-v2-s5-c2-0226.png","icon_file":"tk-v2-s5-c2-0226.png","status":"Confirmed","reco":{"file":"m48-design-and-simulation-256px-grn.png","why":"Workstation + wireframe = CAD/simulation.","conf":"medium"}},
+    {"label":"CTA 3","title":"cuDSS","snippet":"Solving large-scale linear sparse engineering problems.","link":"https://developer.nvidia.com/blog/solving-large-scale-linear-sparse-problems-with-nvidia-cudss/","icon_url":"icons/tk-v2-s5-c3-0226.png","icon_file":"tk-v2-s5-c3-0226.png","status":"Confirmed","reco":{"file":"m48-algorithms-numerical-techniques-256px-grn.png","why":"Literally the numerical-techniques icon — cuDSS is a sparse solver.","conf":"high"}}
+  ]},
+  {"priority":"P6","ctas":[
+    {"label":"CTA 1","title":"NVIDIA Nemotron","snippet":"Open models and recipes for specialized AI agents in healthcare.","link":"https://developer.nvidia.com/nemotron","icon_url":"icons/tk-v2-s7-c1-0226.png","icon_file":"tk-v2-s7-c1-0226.png","status":"Confirmed","reco":{"file":"m48-nemo-service-256px-grn.png","why":"NeMo-branded tree/service icon — Nemotron is the NeMo family of open models.","conf":"high"}},
+    {"label":"CTA 2","title":"Digital Health Developers Program","snippet":"Developer program for digital health AI solutions.","link":"https://developer.nvidia.com/digital-health-developers","icon_url":"icons/tk-v2-s7-c2-0226.png","icon_file":"tk-v2-s7-c2-0226.png","status":"Confirmed","reco":{"file":"m48-healthcare-telehealth-256px-grn.png","why":"Laptop + doctor = digital + healthcare developer.","conf":"high"}},
+    {"label":"CTA 3","title":"NVIDIA Models","snippet":"Build, evaluate, and manage AI agents and models.","link":"https://build.nvidia.com/models?ncid=pa-srch-goog-405472","icon_url":"icons/tk-v2-s7-c3-0226.png","icon_file":"tk-v2-s7-c3-0226.png","status":"Confirmed","reco":{"file":"m48-nvidia-gpu-cloud-ngc-catalog-256px-grn.png","why":"NGC catalog with checkmark — build.nvidia.com is the model catalog.","conf":"high"}}
+  ]},
+  {"priority":"P7","ctas":[
+    {"label":"CTA 1","title":"Sovereign AI Factories","snippet":"Government-grade sovereign AI infrastructure.","link":"https://www.nvidia.com/en-gb/lp/industries/global-public-sector/sovereign-ai-whitepaper/","icon_url":"icons/tk-v2-s8-c1-0226.png","icon_file":"tk-v2-s8-c1-0226.png","status":"Confirmed","reco":{"file":"m48-government-256px-grn.png","why":"Capitol building — sovereign / government AI infrastructure.","conf":"high"}},
+    {"label":"CTA 2","title":"Sovereign LLMs","snippet":"Technical guidance for sovereign LLMs and national AI.","link":"https://www.nvidia.com/en-us/lp/industries/global-public-sector/sovereign-ai-technical-overview/","icon_url":"icons/tk-v2-s8-c2-0226.png","icon_file":"tk-v2-s8-c2-0226.png","status":"Confirmed","reco":{"file":"m48-ai-emerging-markets-256px-grn.png","why":"Globe with national nodes = sovereign LLMs distributed by country.","conf":"medium"}},
+    {"label":"CTA 3","title":"Confidential Computing","snippet":"Protect sensitive AI workloads and public-sector data.","link":"https://www.nvidia.com/en-us/data-center/solutions/confidential-computing/","icon_url":"icons/tk-v2-s8-c3-0226.png","icon_file":"tk-v2-s8-c3-0226.png","status":"Suggested","reco":{"file":"m48-ai-privacy-256px-grn.png","why":"Padlock + NN — exactly confidential AI compute.","conf":"high"}}
+  ]},
+  {"priority":"P8","ctas":[
+    {"label":"CTA 1","title":"AI Cybersecurity","snippet":"AI-powered cyber defense and zero-trust security.","link":"https://www.nvidia.com/en-us/solutions/ai/cybersecurity/","icon_url":"icons/tk-v2-s9-c1-0226.png","icon_file":"tk-v2-s9-c1-0226.png","status":"Confirmed","reco":{"file":"m48-cybersecurity-piplelines-256px-grn.png","why":"Literally named for cybersecurity pipelines (sic — NVIDIA misspelled this in the DAM as \"piplelines\").","conf":"high"}},
+    {"label":"CTA 2","title":"Morpheus","snippet":"Real-time threat detection across cloud, edge, and datacenter.","link":"https://developer.nvidia.com/morpheus-cybersecurity","icon_url":"icons/tk-v2-s9-c2-0226.png","icon_file":"tk-v2-s9-c2-0226.png","status":"Confirmed","reco":{"file":"m48-networking-security-firewall-256px-grn.png","why":"Firewall flame deflecting arrows — Morpheus is network threat detection.","conf":"high"}},
+    {"label":"CTA 3","title":"Blank","snippet":"No CTA content yet.","link":"","icon_url":"","icon_file":"","status":"Blank"}
+  ]},
+  {"priority":"P9","ctas":[
+    {"label":"CTA 1","title":"Brand-Safe Content","snippet":"Generative AI and OpenUSD for content creation.","link":"https://www.nvidia.com/en-us/use-cases/content-creation-using-generative-ai/","icon_url":"icons/tk-v2-s10-c1-0226.png","icon_file":"tk-v2-s10-c1-0226.png","status":"Confirmed","reco":{"file":"m48-chat-usd-256px-grn.png","why":"Stacked chat = OpenUSD-driven generative content.","conf":"medium"}},
+    {"label":"CTA 2","title":"Media Workflows","snippet":"GenAI, graphics, and networking for media and entertainment.","link":"https://www.nvidia.com/en-gb/industries/media-and-entertainment/","icon_url":"icons/tk-v2-s10-c2-0226.png","icon_file":"tk-v2-s10-c2-0226.png","status":"Confirmed","reco":{"file":"m48-media-news-cycle-256px-grn.png","why":"Chat + video + image cycling — media workflow loop.","conf":"high"}},
+    {"label":"CTA 3","title":"RTX Rendering","snippet":"Ray tracing and AI denoising for rendering workflows.","link":"https://www.nvidia.com/en-us/on-demand/session/siggraph25-s01/","icon_url":"icons/tk-v2-s10-c3-0226.png","icon_file":"tk-v2-s10-c3-0226.png","status":"Confirmed","reco":{"file":"m48-render-256px-grn.png","why":"Literally named 'render' — RTX is a rendering technology.","conf":"high"}}
+  ]},
+  {"priority":"P10","ctas":[
+    {"label":"CTA 1","title":"VSS for Media","snippet":"Video search and understanding with multimodal agents.","link":"https://developer.nvidia.com/blog/advance-video-analytics-ai-agents-using-the-nvidia-ai-blueprint-for-video-search-and-summarization/","icon_url":"icons/tk-v2-s11-c1-0226.png","icon_file":"tk-v2-s11-c1-0226.png","status":"Confirmed","reco":{"file":"m48-intelligent-video-analytics-256px-grn.png","why":"Literally the video analytics / VLM icon.","conf":"high"}},
+    {"label":"CTA 2","title":"Cosmos-Embed1","snippet":"Video embeddings for recommendation, search, and safety.","link":"https://docs.nvidia.com/nim/cosmos-embed1/latest/introduction.html","icon_url":"icons/tk-v2-s11-c2-0226.png","icon_file":"tk-v2-s11-c2-0226.png","status":"Confirmed","reco":{"file":"m48-vector-database-256px-grn.png","why":"3-axis with nodes — embeddings live in a vector database.","conf":"high"}},
+    {"label":"CTA 3","title":"Multimodal Safety NIM","snippet":"Classify and govern AI-generated and user media content.","link":"https://docs.nvidia.com/nim/multimodal-safety/latest/models.html","icon_url":"icons/tk-v2-s11-c3-0226.png","icon_file":"tk-v2-s11-c3-0226.png","status":"Suggested","reco":{"file":"m48-ai-security-256px-grn.png","why":"Shield + NN = AI safety/governance.","conf":"high"}}
+  ]},
+  {"priority":"P11","ctas":[
+    {"label":"CTA 1","title":"Portfolio Optimization Session","snippet":"GPU-accelerated financial decisions and optimization.","link":"https://www.nvidia.com/en-us/on-demand/session/gtc26-dlit81764/","icon_url":"icons/tk-v2-s12-c1-0226.png","icon_file":"tk-v2-s12-c1-0226.png","status":"Confirmed","reco":{"file":"m48-keynote-stage-256px-grn.png","why":"NVIDIA keynote stage — this CTA links to a GTC on-demand session.","conf":"medium"}},
+    {"label":"CTA 2","title":"Signal Discovery Agents","snippet":"Multi-agent systems for financial signal discovery.","link":"https://developer.nvidia.com/blog/automating-and-optimizing-financial-signal-discovery-with-multi-agent-systems/?ncid=so-link-641400-vt09&es_id=ea22eeefb1","icon_url":"icons/tk-v2-s12-c2-0226.png","icon_file":"tk-v2-s12-c2-0226.png","status":"Confirmed","reco":{"file":"m48-building-agentic-ai-application-with-large-language-model-256px-grn.png","why":"Literally an agentic-AI builder icon — matches multi-agent finance systems.","conf":"high"}},
+    {"label":"CTA 3","title":"Quant Portfolio App","snippet":"Scalable quantitative portfolio optimization blueprint.","link":"https://build.nvidia.com/nvidia/quantitative-portfolio-optimization","icon_url":"icons/tk-v2-s12-c3-0226.png","icon_file":"tk-v2-s12-c3-0226.png","status":"Confirmed","reco":{"file":"m48-finance-trade-256px-grn.png","why":"Candlestick chart — exactly quantitative trading/portfolio.","conf":"high"}}
+  ]},
+  {"priority":"P12","ctas":[
+    {"label":"CTA 1","title":"Model Distillation","snippet":"Distill domain-specific financial AI models.","link":"https://build.nvidia.com/nvidia/ai-model-distillation-for-financial-data","icon_url":"icons/tk-v2-s13-c1-0226.png","icon_file":"tk-v2-s13-c1-0226.png","status":"Confirmed","reco":{"file":"m48-model-customization-256px-grn.png","why":"NN + gear = customize/distill the model.","conf":"high"}},
+    {"label":"CTA 2","title":"Faster Python Data Science","snippet":"GPU drop-in replacements for Python data science workflows.","link":"https://developer.nvidia.com/blog/7-drop-in-replacements-to-instantly-speed-up-your-python-data-science-workflows/","icon_url":"icons/tk-v2-s13-c2-0226.png","icon_file":"tk-v2-s13-c2-0226.png","status":"Confirmed","reco":{"file":"m48-accelerated-data-science-256px-grn.png","why":"Literally 'accelerated data science' — RAPIDS in one icon.","conf":"high"}},
+    {"label":"CTA 3","title":"Fraud Detection Guide","snippet":"GPU-accelerated fraud detection workflows.","link":"https://www.nvidia.com/en-us/use-cases/ai-for-fraud-detection/","icon_url":"icons/tk-v2-s13-c3-0226.png","icon_file":"tk-v2-s13-c3-0226.png","status":"Confirmed","reco":{"file":"m48-appl-of-ai-for-anomaly-detection-256px-grn.png","why":"Anomaly-detection icon — fraud detection is anomaly detection.","conf":"high"}}
+  ]},
+  {"priority":"P13","ctas":[
+    {"label":"CTA 1","title":"GPU Operator","snippet":"Automate drivers, runtime, plugins, and monitoring for GPU clusters.","link":"https://nvidia.github.io/gpu-operator/","icon_url":"icons/tk-v2-s14-c1-0226.png","icon_file":"tk-v2-s14-c1-0226.png","status":"Confirmed","reco":{"file":"m48-gpu-architecture-256px-grn.png","why":"Stacked GPU/arrow architecture — matches a GPU cluster operator.","conf":"high"}},
+    {"label":"CTA 2","title":"Enterprise RAG","snippet":"Production-ready RAG blueprint with NVIDIA AI components.","link":"https://build.nvidia.com/nvidia/build-an-enterprise-rag-pipeline/blueprintcard","icon_url":"icons/tk-v2-s14-c2-0226.png","icon_file":"tk-v2-s14-c2-0226.png","status":"Confirmed","reco":{"file":"m48-retrieval-augmented-generation-256px-grn.png","why":"Literally 'retrieval augmented generation'.","conf":"high"}},
+    {"label":"CTA 3","title":"RDMA Networking","snippet":"GPUDirect, InfiniBand, RDMA, and Kubernetes networking quick start.","link":"https://docs.nvidia.com/networking/display/kubernetes2611/quick-start/quick-start-k8s.html","icon_url":"icons/tk-v2-s14-c3-0226.png","icon_file":"tk-v2-s14-c3-0226.png","status":"Confirmed","reco":{"file":"m48-networking-ethernet-2u-switch-256px-grn.png","why":"2U Ethernet/InfiniBand switch — RDMA networking gear.","conf":"high"}}
+  ]},
+  {"priority":"P14","ctas":[
+    {"label":"CTA 1","title":"Speech APIs","snippet":"Speech and voice tools for learning experiences.","link":"https://build.nvidia.com/explore/speech","icon_url":"icons/tk-v2-s16-c1-0226.png","icon_file":"tk-v2-s16-c1-0226.png","status":"Confirmed","reco":{"file":"m48-speech-recognition-256px-grn.png","why":"Waveform → text — matches Speech / ASR APIs.","conf":"high"}},
+    {"label":"CTA 2","title":"NeMo Guardrails","snippet":"Safety, jailbreak protection, and controls for AI tutors.","link":"https://developer.nvidia.com/nemo-guardrails","icon_url":"icons/tk-v2-s16-c2-0226.png","icon_file":"tk-v2-s16-c2-0226.png","status":"Confirmed","reco":{"file":"m48-guideline-document-256px-grn.png","why":"Book with check/X — policy rulebook = guardrails.","conf":"medium"}},
+    {"label":"CTA 3","title":"RAG Study Agent","snippet":"Hands-on Nemotron-powered RAG agent tutorial.","link":"https://developer.nvidia.com/blog/build-a-rag-agent-with-nvidia-nemotron/","icon_url":"icons/tk-v2-s16-c3-0226.png","icon_file":"tk-v2-s16-c3-0226.png","status":"Confirmed","reco":{"file":"m48-building-rag-agent-with-large-language-model-256px-grn.png","why":"Literally 'building a RAG agent with an LLM'.","conf":"high"}}
+  ]},
+  {"priority":"P15","ctas":[
+    {"label":"CTA 1","title":"NeMo Agent Toolkit","snippet":"Engineering assistants and chip design automation agents.","link":"https://developer.nvidia.com/nemo-agent-toolkit","icon_url":"icons/tk-v2-s6-c1-0226.png","icon_file":"tk-v2-s6-c1-0226.png","status":"Confirmed","reco":{"file":"m48-electronic-design-automation-256px-grn.png","why":"Gear + chip = EDA. This CTA is explicitly chip-design agents.","conf":"high"}},
+    {"label":"CTA 2","title":"Confidential Containers","snippet":"Protect proprietary design data and AI workloads.","link":"https://docs.nvidia.com/datacenter/cloud-native/confidential-containers/latest/confidential-containers-deploy.html","icon_url":"icons/tk-v2-s6-c2-0226.png","icon_file":"tk-v2-s6-c2-0226.png","status":"Confirmed","reco":{"file":"m48-containerized-security-256px-grn.png","why":"Hex container with padlock — literally containerized security.","conf":"high"}},
+    {"label":"CTA 3","title":"DOCA Getting Started","snippet":"BlueField offload for networking, storage, and security services.","link":"https://developer.nvidia.com/networking/doca/getting-started","icon_url":"icons/tk-v2-s6-c3-0226.png","icon_file":"tk-v2-s6-c3-0226.png","status":"Suggested","reco":{"file":"m48-bluefield-dpu-256px-grn.png","why":"Literally the BlueField DPU icon — DOCA runs on BlueField.","conf":"high"}}
+  ]},
+  {"priority":"P16","ctas":[
+    {"label":"CTA 1","title":"cuDF","snippet":"Faster pandas-style data workflows on GPU.","link":"https://developer.nvidia.com/topics/ai/data-science/cuda-x-data-science-libraries/cudf","icon_url":"icons/tk-v2-s15-c1-0226.png","icon_file":"tk-v2-s15-c1-0226.png","status":"Confirmed","reco":{"file":"m48-data-loading-library-256px-grn.png","why":"Data + transform — dataframe library on GPU.","conf":"medium"}},
+    {"label":"CTA 2","title":"cuML","snippet":"GPU-accelerated machine learning training and analytics.","link":"https://developer.nvidia.com/topics/ai/data-science/cuda-x-data-science-libraries/cuml","icon_url":"icons/tk-v2-s15-c2-0226.png","icon_file":"tk-v2-s15-c2-0226.png","status":"Confirmed","reco":{"file":"m48-machine-learning-ops-256px-grn.png","why":"ML pipeline icon — matches cuML training/analytics.","conf":"medium"}},
+    {"label":"CTA 3","title":"nx-cugraph","snippet":"Fast graph analytics for very large graphs.","link":"https://rapids.ai/nx-cugraph/","icon_url":"icons/tk-v2-s15-c3-0226.png","icon_file":"tk-v2-s15-c3-0226.png","status":"Confirmed","reco":{"file":"m48-neural-network-3-256px-grn.png","why":"DAM tags this icon 'knn-algorithm / vector-search / rapids-raft' — perfect for cuGraph.","conf":"high"}}
+  ]},
+  {"priority":"P17","ctas":[
+    {"label":"CTA 1","title":"NemoClaw Install","snippet":"Controlled always-on agents with privacy and behavior safeguards.","link":"https://build.nvidia.com/nemoclaw/install","icon_url":"icons/tk-v2-s17-c1-0226.png","icon_file":"tk-v2-s17-c1-0226.png","status":"Confirmed","reco":{"file":"m48-behavior-learning-256px-grn.png","why":"Person + NN shield = controlled-behavior agent.","conf":"medium"}},
+    {"label":"CTA 2","title":"NeMo Guardrails Docs","snippet":"Policy, grounding, PII, and safety checks for AI systems.","link":"https://docs.nvidia.com/nemo/microservices/25.12.0/set-up/deploy-as-microservices/guardrails/index.html","icon_url":"icons/tk-v2-s17-c2-0226.png","icon_file":"tk-v2-s17-c2-0226.png","status":"Confirmed","reco":{"file":"m48-nvidia-shield-256px-grn.png","why":"NVIDIA-branded shield — guardrails / protection.","conf":"high"}},
+    {"label":"CTA 3","title":"Container Security NIM","snippet":"Analyze container vulnerabilities and remediation guidance.","link":"https://build.nvidia.com/nvidia/vulnerability-analysis-for-container-security/nim","icon_url":"icons/tk-v2-s17-c3-0226.png","icon_file":"tk-v2-s17-c3-0226.png","status":"Confirmed","reco":{"file":"m48-layered-security-256px-grn.png","why":"Stacked padlocks = layered container-vuln defense.","conf":"high"}}
+  ]},
+  {"priority":"P18","ctas":[
+    {"label":"CTA 1","title":"Research Agent Launchable","snippet":"Spin up a custom research agent connected to your own data.","link":"https://brev.nvidia.com/launchable/deploy?launchableID=env-2y9mLGTtOuAHzLbXu3xUY5HLckY&ncid=em-nurt-200645-vt53","icon_url":"icons/tk-v2-s18-c1-0226.png","icon_file":"tk-v2-s18-c1-0226.png","status":"Suggested","reco":{"file":"m48-startup-256x-grn.png","why":"Lightbulb-rocket — research idea launching.","conf":"medium"}},
+    {"label":"CTA 2","title":"Sandboxed Agent Launchable","snippet":"Launch a sandboxed agent environment on Brev.","link":"https://brev.nvidia.com/launchable/deploy?launchableID=env-3Azt0aYgVNFEuz7opyx3gscmowS","icon_url":"icons/tk-v2-s18-c2-0226.png","icon_file":"tk-v2-s18-c2-0226.png","status":"Suggested","reco":{"file":"m48-containerized-model-256px-grn.png","why":"Hex container holding NN — exactly a sandboxed agent.","conf":"high"}},
+    {"label":"CTA 3","title":"Nemotron Coding Tools","snippet":"Agentic coding workflows with Nemotron 3 Super.","link":"https://docs.nvidia.com/nemotron/latest/usage-cookbook/Nemotron-3-Super/OpenScaffoldingResources/README.html","icon_url":"icons/tk-v2-s18-c3-0226.png","icon_file":"tk-v2-s18-c3-0226.png","status":"Suggested","reco":{"file":"m48-coding-256px-grn.png","why":"Browser with </> = coding tools.","conf":"high"}}
+  ]}
+];
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// These icon filenames return 302 → /?mktfail on NVIDIA's Marketo CDN
+// (asset not yet uploaded). Render a clean placeholder instead of attempting
+// the broken request.
+const MISSING_FROM_CDN = new Set([]);
+
+function renderCard(priority, cta) {
+  const statusKey = (cta.status || "Blank").toLowerCase();
+  const hasIcon = !!cta.icon_url;
+  const hasLink = !!cta.link;
+  const iconPending = hasIcon && MISSING_FROM_CDN.has(cta.icon_file);
+
+  let iconBlock;
+  if (!hasIcon) {
+    iconBlock = `<div class="icon-fallback" style="display:flex;">No icon</div>`;
+  } else if (iconPending) {
+    iconBlock = `
+      <div class="icon-fallback pending" style="display:flex;">Icon pending<br/>on CDN</div>
+      <div class="url-fallback" style="display:block;">${escapeHtml(cta.icon_url)}</div>
+    `;
+  } else {
+    iconBlock = `
+      <img src="${escapeHtml(cta.icon_url)}" alt="${escapeHtml(cta.icon_file)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; const u=this.parentElement.querySelector('.url-fallback'); if(u) u.style.display='block';" />
+      <div class="icon-fallback">Image failed to load</div>
+      <div class="url-fallback">${escapeHtml(cta.icon_url)}</div>
+    `;
+  }
+
+  return `
+    <div class="card">
+      <div class="card-top">
+        <span>${escapeHtml(priority)} · ${escapeHtml(cta.label)}</span>
+        <span class="badge ${statusKey}">${escapeHtml(cta.status || "Blank")}</span>
+      </div>
+      <div class="card-body">
+        <div class="icon-wrap">
+          ${iconBlock}
+          <div class="icon-file">${escapeHtml(cta.icon_file || "—")}</div>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">${escapeHtml(cta.title)}</h3>
+          <p class="card-snippet">${escapeHtml(cta.snippet)}</p>
+          ${hasLink
+            ? `<a class="card-link" href="${escapeHtml(cta.link)}" target="_blank" rel="noopener noreferrer">Open CTA →</a>`
+            : `<span class="card-link disabled">No link</span>`}
+        </div>
+      </div>
+      ${cta.reco ? `
+        <div class="reco">
+          <div class="reco-head">
+            <span>Recommended icon swap</span>
+            <span class="reco-conf ${escapeHtml(cta.reco.conf)}">${escapeHtml(cta.reco.conf)} confidence</span>
+          </div>
+          <div class="reco-file">${escapeHtml(cta.reco.file)}</div>
+          <div class="reco-why">${escapeHtml(cta.reco.why)}</div>
+        </div>
+      ` : ``}
+    </div>
+  `;
+}
+
+function renderSection(section) {
+  const cards = section.ctas.map(c => renderCard(section.priority, c)).join("");
+  return `
+    <section class="priority-section">
+      <div class="priority-header">
+        <h2>${escapeHtml(section.priority)}</h2>
+        <span class="sub">CTA 1 · CTA 2 · CTA 3</span>
+      </div>
+      <div class="row">${cards}</div>
+    </section>
+  `;
+}
+
+document.getElementById("dashboard").innerHTML = DATA.map(renderSection).join("");
+</script>
+</body>
+</html>
