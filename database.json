@@ -509,8 +509,8 @@
   },
   {
     "priority": "P15",
-    "industry": "Semiconductors",
-    "workload": "Agentic AI / Generative AI, Simulation / Modeling / Design",
+    "industry": "Hardware / Semiconductor",
+    "workload": "Trustworthy AI / Cybersecurity, Agentic AI / Generative AI, Networking / Communications",
     "ctas": [
       {
         "label": "CTA 1",
