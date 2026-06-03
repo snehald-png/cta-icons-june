@@ -435,8 +435,8 @@
   },
   {
     "priority": "P13",
-    "industry": "All Industries",
-    "workload": "Data Center / Cloud, MLOps",
+    "industry": "Hardware / Semiconductor",
+    "workload": "Trustworthy AI / Cybersecurity, Agentic AI / Generative AI, Other, Networking / Communications",
     "ctas": [
       {
         "label": "CTA 1",
