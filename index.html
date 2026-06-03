@@ -217,6 +217,14 @@
     flex: 1;
     min-width: 0;
   }
+  .cta-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
   .card-title {
     font-size: 14px;
     font-weight: 700;
@@ -324,10 +332,11 @@ function renderCard(priority, cta) {
           ${iconBlock}
         </div>
         <div class="card-content">
+          <div class="cta-label">${escapeHtml(cta.label || "")}</div>
           <h3 class="card-title">${escapeHtml(cta.title)}</h3>
           <p class="card-snippet">${escapeHtml(cta.snippet)}</p>
           ${hasLink
-            ? `<a class="card-link" href="${escapeHtml(cta.link)}" target="_blank" rel="noopener noreferrer">More details →</a>`
+            ? `<a class="card-link" href="${escapeHtml(cta.link)}" target="_blank" rel="noopener noreferrer">CTA here →</a>`
             : `<span class="card-link disabled">No link</span>`}
         </div>
       </div>
