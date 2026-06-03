@@ -270,17 +270,23 @@ function escapeHtml(s) {
     .replace(/'/g, "&#39;");
 }
 
-// Split a "comma-separated values" cell into a tidy array of trimmed items.
-function splitList(s) {
+// Tokenize a cell value into atomic tags. Split on commas, then on slashes,
+// so "Automotive / Transportation" becomes ["Automotive", "Transportation"]
+// and "Retail / Consumer Packaged Goods, Restaurant / Quick-Service" becomes
+// ["Retail", "Consumer Packaged Goods", "Restaurant", "Quick-Service"].
+function splitTokens(s) {
   if (!s) return [];
-  return s.split(",").map(x => x.trim()).filter(Boolean);
+  return s.split(",")
+    .flatMap(part => part.split("/"))
+    .map(x => x.trim())
+    .filter(Boolean);
 }
 
 function uniqueSorted(arr) {
   return Array.from(new Set(arr)).sort((a, b) => a.localeCompare(b));
 }
 
-function buildSelect(selectEl, items) {
+function buildSelect(selectEl, items, preserveValue) {
   // Preserve the first placeholder option, clear the rest
   const placeholder = selectEl.querySelector("option");
   selectEl.innerHTML = "";
@@ -291,20 +297,47 @@ function buildSelect(selectEl, items) {
     opt.textContent = it;
     selectEl.appendChild(opt);
   }
+  // Restore the prior value if still valid
+  if (preserveValue && items.includes(preserveValue)) {
+    selectEl.value = preserveValue;
+  } else {
+    selectEl.value = "";
+  }
 }
 
 // Match logic.
-// Per priority, parse industry and workload as comma-separated lists. Treat
-// each priority's list as the set of acceptable values for that dimension.
-// Match the priority if the user-picked industry is in the industry list AND
-// the user-picked workload is in the workload list.
-// (For multi-select / criteria_logic-aware matching, extend this later.)
+// A priority "covers" a user-picked industry tag if that tag is in the
+// tokenized industry list. Same for workload. The priority matches when both
+// conditions hold (or when the user has only picked one dimension, then only
+// that dimension is checked).
 function priorityMatches(section, userIndustry, userWorkload) {
-  const inds = splitList(section.industry);
-  const wls = splitList(section.workload);
+  const inds = splitTokens(section.industry);
+  const wls = splitTokens(section.workload);
   const indOk = userIndustry === "" || inds.includes(userIndustry);
   const wlOk = userWorkload === "" || wls.includes(userWorkload);
   return indOk && wlOk;
+}
+
+// Compute which workload tags are reachable given the current industry pick.
+function workloadsForIndustry(userIndustry) {
+  if (!userIndustry) {
+    return uniqueSorted(DATA.flatMap(s => splitTokens(s.workload)));
+  }
+  return uniqueSorted(
+    DATA.filter(s => splitTokens(s.industry).includes(userIndustry))
+        .flatMap(s => splitTokens(s.workload))
+  );
+}
+
+// Same in reverse.
+function industriesForWorkload(userWorkload) {
+  if (!userWorkload) {
+    return uniqueSorted(DATA.flatMap(s => splitTokens(s.industry)));
+  }
+  return uniqueSorted(
+    DATA.filter(s => splitTokens(s.workload).includes(userWorkload))
+        .flatMap(s => splitTokens(s.industry))
+  );
 }
 
 function renderCard(cta) {
@@ -400,18 +433,34 @@ async function loadAndInit() {
     return;
   }
 
-  // Build option lists from the dataset.
-  const allIndustries = uniqueSorted(DATA.flatMap(s => splitList(s.industry)));
-  const allWorkloads = uniqueSorted(DATA.flatMap(s => splitList(s.workload)));
+  const indSel = document.getElementById("industrySelect");
+  const wlSel = document.getElementById("workloadSelect");
 
-  buildSelect(document.getElementById("industrySelect"), allIndustries);
-  buildSelect(document.getElementById("workloadSelect"), allWorkloads);
+  function repopulateDropdowns(changed) {
+    const curInd = indSel.value;
+    const curWl = wlSel.value;
+    // Repopulate the OPPOSITE dropdown so its options reflect what's reachable
+    // given the current selection. Preserve the other side's value.
+    if (changed === "industry") {
+      buildSelect(wlSel, workloadsForIndustry(curInd), curWl);
+    } else if (changed === "workload") {
+      buildSelect(indSel, industriesForWorkload(curWl), curInd);
+    } else {
+      // initial load: populate both with full lists
+      buildSelect(indSel, industriesForWorkload(""), curInd);
+      buildSelect(wlSel, workloadsForIndustry(""), curWl);
+    }
+  }
 
-  document.getElementById("industrySelect").addEventListener("change", applyFilter);
-  document.getElementById("workloadSelect").addEventListener("change", applyFilter);
+  repopulateDropdowns(null);
+
+  indSel.addEventListener("change", () => { repopulateDropdowns("industry"); applyFilter(); });
+  wlSel.addEventListener("change", () => { repopulateDropdowns("workload"); applyFilter(); });
+
   document.getElementById("resetBtn").addEventListener("click", () => {
-    document.getElementById("industrySelect").value = "";
-    document.getElementById("workloadSelect").value = "";
+    indSel.value = "";
+    wlSel.value = "";
+    repopulateDropdowns(null);
     applyFilter();
   });
 
