@@ -38,8 +38,8 @@
   },
   {
     "priority": "P2",
-    "industry": "Manufacturing, Smart Cities / Spaces, Retail / CPG",
-    "workload": "Computer Vision / Video Analytics, Robotics",
+    "industry": "AEC, Agriculture",
+    "workload": "Robotics, Simulation / Modeling / Design",
     "ctas": [
       {
         "label": "CTA 1",
