@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TRAIL Kits : CTA Picker (Industry × Workload)</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --card-bg: #ffffff;
+    --border: #e3e6eb;
+    --text: #1f2328;
+    --muted: #6b7280;
+    --accent: #76b900;
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.45;
+  }
+  header {
+    max-width: 1400px;
+    margin: 0 auto 18px auto;
+  }
+  h1 {
+    margin: 0 0 6px 0;
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 13.5px;
+    margin: 0;
+  }
+  main { max-width: 1400px; margin: 0 auto; }
+
+  /* Filter bar */
+  .filter-bar {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 16px;
+    align-items: end;
+    margin-bottom: 18px;
+  }
+  @media (max-width: 800px) {
+    .filter-bar { grid-template-columns: 1fr; }
+  }
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .field select {
+    width: 100%;
+    font-size: 14px;
+    font-family: inherit;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--text);
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='%236b7280' d='M4 6l4 4 4-4z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    padding-right: 32px;
+    cursor: pointer;
+  }
+  .field select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .reset-btn {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .reset-btn:hover { color: var(--text); border-color: #cdd3da; }
+
+  /* Result summary */
+  .result-summary {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 4px 12px 4px;
+  }
+  .result-summary strong { color: var(--text); }
+
+  /* Priority sections (mirror of main dashboard) */
+  .priority-section { margin-bottom: 26px; }
+  .priority-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .priority-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.25;
+  }
+  .priority-header-text { flex: 1; min-width: 0; }
+  .priority-workload {
+    margin-top: 2px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+  .priority-tag {
+    flex: 0 0 auto;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: #eef2f5;
+    color: #4a5568;
+    letter-spacing: 0.05em;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  @media (max-width: 900px) { .row { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: var(--shadow);
+  }
+  .card-body {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .icon-wrap { flex: 0 0 72px; width: 72px; text-align: center; }
+  .icon-wrap img {
+    width: 72px;
+    height: auto;
+    border-radius: 6px;
+    background: #fafafa;
+    border: 1px solid var(--border);
+    object-fit: contain;
+    display: block;
+  }
+  .icon-fallback {
+    width: 72px;
+    height: 72px;
+    border: 1px dashed #c8c8c8;
+    border-radius: 6px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 11px;
+    text-align: center;
+    padding: 4px;
+    background: #fafafa;
+    box-sizing: border-box;
+    line-height: 1.3;
+  }
+  .card-content { flex: 1; min-width: 0; }
+  .cta-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 2px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 3px 0;
+    color: var(--text);
+  }
+  .card-snippet {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 0 0 6px 0;
+    line-height: 1.35;
+  }
+  .card-link {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    transition: background 0.15s ease;
+  }
+  .card-link:hover { background: var(--accent); color: #fff; }
+  .card-link.disabled { color: #aaa; border-color: #ddd; pointer-events: none; }
+
+  .empty-state {
+    background: #fff;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 28px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .empty-state strong { color: var(--text); }
+</style>
+</head>
+<body>
+<header>
+  <h1>TRAIL Kits : CTA Picker</h1>
+  <p class="subtitle">Pick an Industry and a Workload to see the matching CTAs.</p>
+</header>
+
+<main>
+  <div class="filter-bar">
+    <div class="field">
+      <label for="industrySelect">Industry</label>
+      <select id="industrySelect">
+        <option value="">— Select an industry —</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="workloadSelect">Workload</label>
+      <select id="workloadSelect">
+        <option value="">— Select a workload —</option>
+      </select>
+    </div>
+    <button id="resetBtn" class="reset-btn" type="button">Reset</button>
+  </div>
+
+  <div id="resultSummary" class="result-summary"></div>
+  <div id="results"></div>
+</main>
+
+<script>
+let DATA = [];
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+// Split a "comma-separated values" cell into a tidy array of trimmed items.
+function splitList(s) {
+  if (!s) return [];
+  return s.split(",").map(x => x.trim()).filter(Boolean);
+}
+
+function uniqueSorted(arr) {
+  return Array.from(new Set(arr)).sort((a, b) => a.localeCompare(b));
+}
+
+function buildSelect(selectEl, items) {
+  // Preserve the first placeholder option, clear the rest
+  const placeholder = selectEl.querySelector("option");
+  selectEl.innerHTML = "";
+  selectEl.appendChild(placeholder);
+  for (const it of items) {
+    const opt = document.createElement("option");
+    opt.value = it;
+    opt.textContent = it;
+    selectEl.appendChild(opt);
+  }
+}
+
+// Match logic.
+// Per priority, parse industry and workload as comma-separated lists. Treat
+// each priority's list as the set of acceptable values for that dimension.
+// Match the priority if the user-picked industry is in the industry list AND
+// the user-picked workload is in the workload list.
+// (For multi-select / criteria_logic-aware matching, extend this later.)
+function priorityMatches(section, userIndustry, userWorkload) {
+  const inds = splitList(section.industry);
+  const wls = splitList(section.workload);
+  const indOk = userIndustry === "" || inds.includes(userIndustry);
+  const wlOk = userWorkload === "" || wls.includes(userWorkload);
+  return indOk && wlOk;
+}
+
+function renderCard(cta) {
+  const hasIcon = !!cta.icon_url;
+  const hasLink = !!cta.link;
+  const iconBlock = hasIcon
+    ? `<img src="${escapeHtml(cta.icon_url)}" alt="${escapeHtml(cta.icon_file || "")}"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+       <div class="icon-fallback">Image failed</div>`
+    : `<div class="icon-fallback" style="display:flex;">No icon</div>`;
+  return `
+    <div class="card">
+      <div class="card-body">
+        <div class="icon-wrap">${iconBlock}</div>
+        <div class="card-content">
+          <div class="cta-label">${escapeHtml(cta.label || "")}</div>
+          <h3 class="card-title">${escapeHtml(cta.title || "")}</h3>
+          <p class="card-snippet">${escapeHtml(cta.snippet || "")}</p>
+          ${hasLink
+            ? `<a class="card-link" href="${escapeHtml(cta.link)}" target="_blank" rel="noopener noreferrer">CTA here →</a>`
+            : `<span class="card-link disabled">No link</span>`}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderSection(section) {
+  const cards = (section.ctas || []).map(renderCard).join("");
+  return `
+    <section class="priority-section">
+      <div class="priority-header">
+        <div class="priority-header-text">
+          <h2>${escapeHtml(section.industry || "")}</h2>
+          <div class="priority-workload">${escapeHtml(section.workload || "")}</div>
+        </div>
+        <span class="priority-tag">${escapeHtml(section.priority || "")}</span>
+      </div>
+      <div class="row">${cards}</div>
+    </section>
+  `;
+}
+
+function applyFilter() {
+  const userIndustry = document.getElementById("industrySelect").value;
+  const userWorkload = document.getElementById("workloadSelect").value;
+  const summary = document.getElementById("resultSummary");
+  const results = document.getElementById("results");
+
+  if (!userIndustry && !userWorkload) {
+    summary.innerHTML = `Pick an <strong>industry</strong> and a <strong>workload</strong> above to filter.`;
+    results.innerHTML = "";
+    return;
+  }
+
+  const matches = DATA.filter(s => priorityMatches(s, userIndustry, userWorkload));
+  const total = matches.length;
+  const totalCtas = matches.reduce((n, s) => n + (s.ctas?.length || 0), 0);
+
+  if (total === 0) {
+    summary.innerHTML = `No priority matches <strong>${escapeHtml(userIndustry || "(any industry)")}</strong> × <strong>${escapeHtml(userWorkload || "(any workload)")}</strong>.`;
+    results.innerHTML = `
+      <div class="empty-state">
+        Nothing in the database matches that combination yet.<br/>
+        Try a different pick or use the <a href="cta_dashboard.html" style="color:var(--accent);">full dashboard</a>.
+      </div>`;
+    return;
+  }
+
+  summary.innerHTML =
+    `<strong>${total}</strong> priorit${total === 1 ? "y" : "ies"} matched ` +
+    `(<strong>${totalCtas}</strong> CTA${totalCtas === 1 ? "" : "s"}) for ` +
+    `<strong>${escapeHtml(userIndustry || "(any industry)")}</strong> × ` +
+    `<strong>${escapeHtml(userWorkload || "(any workload)")}</strong>.`;
+  results.innerHTML = matches.map(renderSection).join("");
+}
+
+async function loadAndInit() {
+  const summary = document.getElementById("resultSummary");
+  const results = document.getElementById("results");
+  try {
+    const res = await fetch("database.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status} while fetching database.json`);
+    DATA = await res.json();
+  } catch (err) {
+    results.innerHTML = `
+      <div class="empty-state" style="border-color:#f7c0c0;background:#fff5f5;color:#8a2c2c;">
+        Couldn't load <code>database.json</code>.<br/>
+        <small>${escapeHtml(err.message)}</small><br/><br/>
+        Make sure you opened this via a local server (not file://):<br/>
+        <code style="display:inline-block;margin-top:6px;padding:4px 8px;background:#fff;border-radius:4px;">python3 -m http.server 8000</code>
+      </div>`;
+    return;
+  }
+
+  // Build option lists from the dataset.
+  const allIndustries = uniqueSorted(DATA.flatMap(s => splitList(s.industry)));
+  const allWorkloads = uniqueSorted(DATA.flatMap(s => splitList(s.workload)));
+
+  buildSelect(document.getElementById("industrySelect"), allIndustries);
+  buildSelect(document.getElementById("workloadSelect"), allWorkloads);
+
+  document.getElementById("industrySelect").addEventListener("change", applyFilter);
+  document.getElementById("workloadSelect").addEventListener("change", applyFilter);
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    document.getElementById("industrySelect").value = "";
+    document.getElementById("workloadSelect").value = "";
+    applyFilter();
+  });
+
+  applyFilter();
+}
+
+loadAndInit();
+</script>
+</body>
+</html>
