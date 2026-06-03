@@ -305,14 +305,22 @@ function buildSelect(selectEl, items, preserveValue) {
   }
 }
 
-// Strict matching: the user-picked industry/workload must appear literally
-// in the priority's tokenized list. We do NOT expand "All Industries" as a
-// wildcard, so picking a specific industry only surfaces workloads that the
-// document explicitly attaches to that industry. To see cross-industry
-// priorities (P16 Data Science, P17 Trustworthy AI, P18 Agentic AI), pick
-// "All Industries" as the industry.
+// Matching rules:
+//   - A priority whose industry list contains "All Industries" is treated as
+//     a wildcard — it covers any user-picked industry.
+//   - "All Industries" itself is NEVER offered as a selectable industry
+//     option; the workloads of those priorities (Data Science, Trustworthy
+//     AI, Agentic AI / Generative AI, …) are simply always available
+//     regardless of which specific industry the user picks.
+const ALL_INDUSTRIES = "All Industries";
+
+function isWildcardIndustryRow(section) {
+  return splitTokens(section.industry).includes(ALL_INDUSTRIES);
+}
+
 function industryCovers(section, userIndustry) {
   if (!userIndustry) return true;
+  if (isWildcardIndustryRow(section)) return true;
   return splitTokens(section.industry).includes(userIndustry);
 }
 
@@ -325,6 +333,9 @@ function priorityMatches(section, userIndustry, userWorkload) {
   return industryCovers(section, userIndustry) && workloadCovers(section, userWorkload);
 }
 
+// Workloads available given the current industry pick: includes workloads
+// from priorities literally listing this industry, plus workloads from any
+// "All Industries" priorities (since they apply to everyone).
 function workloadsForIndustry(userIndustry) {
   return uniqueSorted(
     DATA.filter(s => industryCovers(s, userIndustry))
@@ -332,10 +343,20 @@ function workloadsForIndustry(userIndustry) {
   );
 }
 
+// Industries available given the current workload pick. Hide "All
+// Industries" from the option list — it's a wildcard, not a real choice.
+// If the workload only exists on "All Industries" rows, every literal
+// industry in the dataset becomes available.
 function industriesForWorkload(userWorkload) {
+  const matched = DATA.filter(s => workloadCovers(s, userWorkload));
+  const onlyWildcard = matched.length > 0 && matched.every(isWildcardIndustryRow);
+  if (onlyWildcard) {
+    return uniqueSorted(
+      DATA.flatMap(s => splitTokens(s.industry).filter(t => t !== ALL_INDUSTRIES))
+    );
+  }
   return uniqueSorted(
-    DATA.filter(s => workloadCovers(s, userWorkload))
-        .flatMap(s => splitTokens(s.industry))
+    matched.flatMap(s => splitTokens(s.industry).filter(t => t !== ALL_INDUSTRIES))
   );
 }
 
