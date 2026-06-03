@@ -314,6 +314,32 @@ function buildSelect(selectEl, items, preserveValue) {
 //     regardless of which specific industry the user picks.
 const ALL_INDUSTRIES = "All Industries";
 
+// Tokens we don't want to surface to the user — either generic catch-alls
+// ("Other") or redundant pairings ("Academia" lives alongside "Education").
+// Filtered out of dropdown options AND when rendering section headers.
+const HIDDEN_TOKENS = new Set([
+  "Academia",
+  "Other",
+]);
+
+function isVisibleToken(t) {
+  return t && !HIDDEN_TOKENS.has(t) && t !== ALL_INDUSTRIES;
+}
+
+// Rebuild a cell value with hidden tokens removed but original comma/slash
+// grouping preserved (commas separate sub-groups, slashes separate within).
+function cleanForDisplay(s) {
+  if (!s) return "";
+  return s.split(",")
+    .map(chunk => chunk.split("/")
+      .map(t => t.trim())
+      .filter(isVisibleToken)
+      .join(" / ")
+    )
+    .filter(chunk => chunk.length > 0)
+    .join(", ");
+}
+
 function isWildcardIndustryRow(section) {
   return splitTokens(section.industry).includes(ALL_INDUSTRIES);
 }
@@ -333,30 +359,28 @@ function priorityMatches(section, userIndustry, userWorkload) {
   return industryCovers(section, userIndustry) && workloadCovers(section, userWorkload);
 }
 
-// Workloads available given the current industry pick: includes workloads
-// from priorities literally listing this industry, plus workloads from any
-// "All Industries" priorities (since they apply to everyone).
+// Workloads available given the current industry pick.
 function workloadsForIndustry(userIndustry) {
   return uniqueSorted(
     DATA.filter(s => industryCovers(s, userIndustry))
         .flatMap(s => splitTokens(s.workload))
+        .filter(isVisibleToken)
   );
 }
 
-// Industries available given the current workload pick. Hide "All
-// Industries" from the option list — it's a wildcard, not a real choice.
-// If the workload only exists on "All Industries" rows, every literal
-// industry in the dataset becomes available.
+// Industries available given the current workload pick. "All Industries"
+// itself is never a selectable option; if the workload only lives on
+// "All Industries" rows, every literal industry in the dataset opens up.
 function industriesForWorkload(userWorkload) {
   const matched = DATA.filter(s => workloadCovers(s, userWorkload));
   const onlyWildcard = matched.length > 0 && matched.every(isWildcardIndustryRow);
   if (onlyWildcard) {
     return uniqueSorted(
-      DATA.flatMap(s => splitTokens(s.industry).filter(t => t !== ALL_INDUSTRIES))
+      DATA.flatMap(s => splitTokens(s.industry)).filter(isVisibleToken)
     );
   }
   return uniqueSorted(
-    matched.flatMap(s => splitTokens(s.industry).filter(t => t !== ALL_INDUSTRIES))
+    matched.flatMap(s => splitTokens(s.industry)).filter(isVisibleToken)
   );
 }
 
@@ -386,12 +410,14 @@ function renderCard(cta) {
 
 function renderSection(section) {
   const cards = (section.ctas || []).map(renderCard).join("");
+  const cleanIndustry = cleanForDisplay(section.industry);
+  const cleanWorkload = cleanForDisplay(section.workload);
   return `
     <section class="priority-section">
       <div class="priority-header">
         <div class="priority-header-text">
-          <h2>${escapeHtml(section.industry || "")}</h2>
-          <div class="priority-workload">${escapeHtml(section.workload || "")}</div>
+          <h2>${escapeHtml(cleanIndustry)}</h2>
+          <div class="priority-workload">${escapeHtml(cleanWorkload)}</div>
         </div>
         <span class="priority-tag">${escapeHtml(section.priority || "")}</span>
       </div>
