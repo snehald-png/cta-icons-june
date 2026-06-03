@@ -282,16 +282,6 @@
         "icon_file": "m48-networking-security-firewall-256px-grn.png",
         "status": "Confirmed",
         "code": "tk_s8_c2_0626.png"
-      },
-      {
-        "label": "CTA 3",
-        "title": "Blank",
-        "snippet": "No CTA content yet.",
-        "link": "",
-        "icon_url": "",
-        "icon_file": "",
-        "status": "Blank",
-        "code": "tk_s8_c3_0626.png"
       }
     ]
   },
