@@ -332,10 +332,11 @@ function renderCard(priority, cta) {
           ${iconBlock}
         </div>
         <div class="card-content">
+          <div class="cta-label">${escapeHtml(cta.label || "")}</div>
           <h3 class="card-title">${escapeHtml(cta.title)}</h3>
           <p class="card-snippet">${escapeHtml(cta.snippet)}</p>
           ${hasLink
-            ? `<a class="card-link" href="${escapeHtml(cta.link)}" target="_blank" rel="noopener noreferrer">More details →</a>`
+            ? `<a class="card-link" href="${escapeHtml(cta.link)}" target="_blank" rel="noopener noreferrer">CTA here →</a>`
             : `<span class="card-link disabled">No link</span>`}
         </div>
       </div>
