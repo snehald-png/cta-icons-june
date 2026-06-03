@@ -1,0 +1,668 @@
+[
+  {
+    "priority": "P1",
+    "industry": "Manufacturing, Retail / CPG, Restaurant / QSR",
+    "workload": "Robotics, Simulation / Modeling / Design",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Isaac Lab Arena",
+        "snippet": "Simulation policy evaluation and large-scale robot learning workflows.",
+        "link": "https://developer.nvidia.com/isaac/lab-arena",
+        "icon_url": "cta_icons/m48-simulation-2-256px-grn.png",
+        "icon_file": "m48-simulation-2-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s1_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Isaac Teleop",
+        "snippet": "Robot data collection and teleoperation workflows.",
+        "link": "https://nvidia.github.io/IsaacTeleop/main/index.html",
+        "icon_url": "cta_icons/m48-robot-mimic-256px-grn.png",
+        "icon_file": "m48-robot-mimic-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s1_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "Isaac Sim on Brev",
+        "snippet": "Cloud setup guide for running Isaac Sim on Brev.",
+        "link": "https://docs.isaacsim.omniverse.nvidia.com/5.1.0/installation/install_advanced_cloud_setup_brev.html",
+        "icon_url": "cta_icons/m48-virtual-pc-cloud-computer-256px-grn.png",
+        "icon_file": "m48-virtual-pc-cloud-computer-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s1_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P2",
+    "industry": "Manufacturing, Smart Cities / Spaces, Retail / CPG",
+    "workload": "Computer Vision / Video Analytics, Robotics",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Cosmos Cookbook",
+        "snippet": "World foundation models, guardrails, and data pipelines for physical AI.",
+        "link": "https://nvidia-cosmos.github.io/cosmos-cookbook/index.html",
+        "icon_url": "cta_icons/m48-foundational-model-cognition-256px-grn.png",
+        "icon_file": "m48-foundational-model-cognition-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s2_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Omniverse NuRec",
+        "snippet": "Turns camera and lidar captures into 3D simulation environments.",
+        "link": "https://docs.nvidia.com/nurec/",
+        "icon_url": "cta_icons/m48-3d-art-256px-grn.png",
+        "icon_file": "m48-3d-art-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s2_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "IGX Thor",
+        "snippet": "Edge AI for industrial, medical, and robotics applications.",
+        "link": "https://developer.nvidia.com/blog/nvidia-igx-thor-powers-industrial-medical-and-robotics-edge-ai-applications/",
+        "icon_url": "cta_icons/m48-edge-computing-256px-grn.png",
+        "icon_file": "m48-edge-computing-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s2_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P3",
+    "industry": "Manufacturing, Smart Cities / Spaces, Retail / CPG",
+    "workload": "Computer Vision / Video Analytics",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Physical AI with Cosmos",
+        "snippet": "Scalable synthetic data generation for physical AI.",
+        "link": "https://developer.nvidia.com/blog/how-to-scale-data-generation-for-physical-ai-with-the-nvidia-cosmos-cookbook/",
+        "icon_url": "cta_icons/m48-bootstrapping-computer-vision-models-with-synthetic-data-256px-grn.png",
+        "icon_file": "m48-bootstrapping-computer-vision-models-with-synthetic-data-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s3_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Video Agents with VSS",
+        "snippet": "Searchable and actionable video intelligence with AI agents.",
+        "link": "https://developer.nvidia.com/blog/transform-video-into-instantly-searchable-actionable-intelligence-with-ai-agents-and-skills/",
+        "icon_url": "cta_icons/m48-data-transformation-augmentation-video-256px-grn.png",
+        "icon_file": "m48-data-transformation-augmentation-video-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s3_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "DeepStream Coding Agents",
+        "snippet": "Build vision AI pipelines faster using coding agents.",
+        "link": "https://developer.nvidia.com/blog/how-to-build-vision-ai-pipelines-using-deepstream-coding-agents/",
+        "icon_url": "cta_icons/m48-application-development-using-large-language-model-256px-grn.png",
+        "icon_file": "m48-application-development-using-large-language-model-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s3_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P4",
+    "industry": "Automotive / Transportation",
+    "workload": "Robotics, Simulation / Modeling / Design",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Alpamayo",
+        "snippet": "Closed-loop post-training for autonomous vehicle models.",
+        "link": "https://developer.nvidia.com/blog/how-to-post-train-autonomous-vehicle-models-in-closed-loop-with-nvidia-alpamayo/",
+        "icon_url": "cta_icons/m48-autonomous-car-side-256px-grn.png",
+        "icon_file": "m48-autonomous-car-side-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s4_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Cosmos WFM",
+        "snippet": "Physical AI platform using world foundation models.",
+        "link": "https://www.nvidia.com/en-eu/ai/cosmos/",
+        "icon_url": "cta_icons/m48-foundational-model-dexterity-256px-grn.png",
+        "icon_file": "m48-foundational-model-dexterity-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s4_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "DRIVE Radar Processing",
+        "snippet": "Centralized radar processing for safer Level 4 autonomy.",
+        "link": "https://developer.nvidia.com/blog/how-centralized-radar-processing-on-nvidia-drive-enables-safer-smarter-level-4-autonomy/",
+        "icon_url": "cta_icons/m48-radar-256px-grn.png",
+        "icon_file": "m48-radar-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s4_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P5",
+    "industry": "Aerospace, Automotive / Transportation, Manufacturing",
+    "workload": "Simulation / Modeling / Design",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "NVIDIA Warp",
+        "snippet": "Accelerated computational physics code for AI.",
+        "link": "https://developer.nvidia.com/blog/build-accelerated-differentiable-computational-physics-code-for-ai-with-nvidia-warp/",
+        "icon_url": "cta_icons/m48-physics-physx-256px-grn.png",
+        "icon_file": "m48-physics-physx-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s5_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "PhysicsNeMo for TCAD",
+        "snippet": "AI physics for technology computer-aided design simulations.",
+        "link": "https://developer.nvidia.com/blog/using-ai-physics-for-technology-computer-aided-design-simulations/",
+        "icon_url": "cta_icons/m48-design-and-simulation-256px-grn.png",
+        "icon_file": "m48-design-and-simulation-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s5_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "cuDSS",
+        "snippet": "Solving large-scale linear sparse engineering problems.",
+        "link": "https://developer.nvidia.com/blog/solving-large-scale-linear-sparse-problems-with-nvidia-cudss/",
+        "icon_url": "cta_icons/m48-algorithms-numerical-techniques-256px-grn.png",
+        "icon_file": "m48-algorithms-numerical-techniques-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s5_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P6",
+    "industry": "Healthcare & Life Sciences",
+    "workload": "Agentic AI / Generative AI",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "NVIDIA Nemotron",
+        "snippet": "Open models and recipes for specialized AI agents in healthcare.",
+        "link": "https://developer.nvidia.com/nemotron",
+        "icon_url": "cta_icons/m48-ai-customization-256px-grn.png",
+        "icon_file": "m48-ai-customization-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s6_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Digital Health Developers Program",
+        "snippet": "Developer program for digital health AI solutions.",
+        "link": "https://developer.nvidia.com/digital-health-developers",
+        "icon_url": "cta_icons/m48-healthcare-telehealth-256px-grn.png",
+        "icon_file": "m48-healthcare-telehealth-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s6_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "NVIDIA Models",
+        "snippet": "Build, evaluate, and manage AI agents and models.",
+        "link": "https://build.nvidia.com/models?ncid=pa-srch-goog-405472",
+        "icon_url": "cta_icons/m48-nvidia-gpu-cloud-ngc-catalog-256px-grn.png",
+        "icon_file": "m48-nvidia-gpu-cloud-ngc-catalog-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s6_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P7",
+    "industry": "Public Sector",
+    "workload": "Agentic AI / Generative AI, Data Center / Cloud",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Sovereign AI Factories",
+        "snippet": "Government-grade sovereign AI infrastructure.",
+        "link": "https://www.nvidia.com/en-gb/lp/industries/global-public-sector/sovereign-ai-whitepaper/",
+        "icon_url": "cta_icons/m48-government-256px-grn.png",
+        "icon_file": "m48-government-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s7_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Sovereign LLMs",
+        "snippet": "Technical guidance for sovereign LLMs and national AI.",
+        "link": "https://www.nvidia.com/en-us/lp/industries/global-public-sector/sovereign-ai-technical-overview/",
+        "icon_url": "cta_icons/m48-ai-emerging-markets-256px-grn.png",
+        "icon_file": "m48-ai-emerging-markets-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s7_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "Confidential Computing",
+        "snippet": "Protect sensitive AI workloads and public-sector data.",
+        "link": "https://www.nvidia.com/en-us/data-center/solutions/confidential-computing/",
+        "icon_url": "cta_icons/m48-ai-privacy-256px-grn.png",
+        "icon_file": "m48-ai-privacy-256px-grn.png",
+        "status": "Suggested",
+        "code": "tk_s7_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P8",
+    "industry": "Public Sector",
+    "workload": "Trustworthy AI / Cybersecurity, MLOps",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "AI Cybersecurity",
+        "snippet": "AI-powered cyber defense and zero-trust security.",
+        "link": "https://www.nvidia.com/en-us/solutions/ai/cybersecurity/",
+        "icon_url": "cta_icons/m48-cybersecurity-piplelines-256px-grn.png",
+        "icon_file": "m48-cybersecurity-piplelines-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s8_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Morpheus",
+        "snippet": "Real-time threat detection across cloud, edge, and datacenter.",
+        "link": "https://developer.nvidia.com/morpheus-cybersecurity",
+        "icon_url": "cta_icons/m48-networking-security-firewall-256px-grn.png",
+        "icon_file": "m48-networking-security-firewall-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s8_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "Blank",
+        "snippet": "No CTA content yet.",
+        "link": "",
+        "icon_url": "",
+        "icon_file": "",
+        "status": "Blank",
+        "code": "tk_s8_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P9",
+    "industry": "Media & Entertainment",
+    "workload": "Agentic AI / Generative AI, Content Creation / Rendering",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Brand-Safe Content",
+        "snippet": "Generative AI and OpenUSD for content creation.",
+        "link": "https://www.nvidia.com/en-us/use-cases/content-creation-using-generative-ai/",
+        "icon_url": "cta_icons/m48-chat-usd-256px-grn.png",
+        "icon_file": "m48-chat-usd-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s9_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Media Workflows",
+        "snippet": "GenAI, graphics, and networking for media and entertainment.",
+        "link": "https://www.nvidia.com/en-gb/industries/media-and-entertainment/",
+        "icon_url": "cta_icons/m48-media-news-cycle-256px-grn.png",
+        "icon_file": "m48-media-news-cycle-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s9_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "RTX Rendering",
+        "snippet": "Ray tracing and AI denoising for rendering workflows.",
+        "link": "https://www.nvidia.com/en-us/on-demand/session/siggraph25-s01/",
+        "icon_url": "cta_icons/m48-render-256px-grn.png",
+        "icon_file": "m48-render-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s9_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P10",
+    "industry": "Media & Entertainment",
+    "workload": "Computer Vision / Video Analytics, Agentic AI / Generative AI",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "VSS for Media",
+        "snippet": "Video search and understanding with multimodal agents.",
+        "link": "https://developer.nvidia.com/blog/advance-video-analytics-ai-agents-using-the-nvidia-ai-blueprint-for-video-search-and-summarization/",
+        "icon_url": "cta_icons/m48-intelligent-video-analytics-256px-grn.png",
+        "icon_file": "m48-intelligent-video-analytics-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s10_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Cosmos-Embed1",
+        "snippet": "Video embeddings for recommendation, search, and safety.",
+        "link": "https://docs.nvidia.com/nim/cosmos-embed1/latest/introduction.html",
+        "icon_url": "cta_icons/m48-tokenizer-256px-grn.png",
+        "icon_file": "m48-tokenizer-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s10_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "Multimodal Safety NIM",
+        "snippet": "Classify and govern AI-generated and user media content.",
+        "link": "https://docs.nvidia.com/nim/multimodal-safety/latest/models.html",
+        "icon_url": "cta_icons/m48-ai-security-256px-grn.png",
+        "icon_file": "m48-ai-security-256px-grn.png",
+        "status": "Suggested",
+        "code": "tk_s10_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P11",
+    "industry": "Financial Services",
+    "workload": "Agentic AI / Generative AI, Data Center / Cloud",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Portfolio Optimization Session",
+        "snippet": "GPU-accelerated financial decisions and optimization.",
+        "link": "https://www.nvidia.com/en-us/on-demand/session/gtc26-dlit81764/",
+        "icon_url": "cta_icons/m48-finance-256px-grn.png",
+        "icon_file": "m48-finance-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s11_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Signal Discovery Agents",
+        "snippet": "Multi-agent systems for financial signal discovery.",
+        "link": "https://developer.nvidia.com/blog/automating-and-optimizing-financial-signal-discovery-with-multi-agent-systems/?ncid=so-link-641400-vt09&es_id=ea22eeefb1",
+        "icon_url": "cta_icons/m48-building-agentic-ai-application-with-large-language-model-256px-grn.png",
+        "icon_file": "m48-building-agentic-ai-application-with-large-language-model-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s11_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "Quant Portfolio App",
+        "snippet": "Scalable quantitative portfolio optimization blueprint.",
+        "link": "https://build.nvidia.com/nvidia/quantitative-portfolio-optimization",
+        "icon_url": "cta_icons/m48-finance-trade-256px-grn.png",
+        "icon_file": "m48-finance-trade-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s11_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P12",
+    "industry": "Financial Services",
+    "workload": "Data Science",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Model Distillation",
+        "snippet": "Distill domain-specific financial AI models.",
+        "link": "https://build.nvidia.com/nvidia/ai-model-distillation-for-financial-data",
+        "icon_url": "cta_icons/m48-model-customization-256px-grn.png",
+        "icon_file": "m48-model-customization-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s12_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Faster Python Data Science",
+        "snippet": "GPU drop-in replacements for Python data science workflows.",
+        "link": "https://developer.nvidia.com/blog/7-drop-in-replacements-to-instantly-speed-up-your-python-data-science-workflows/",
+        "icon_url": "cta_icons/m48-accelerated-data-science-256px-grn.png",
+        "icon_file": "m48-accelerated-data-science-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s12_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "Fraud Detection Guide",
+        "snippet": "GPU-accelerated fraud detection workflows.",
+        "link": "https://www.nvidia.com/en-us/use-cases/ai-for-fraud-detection/",
+        "icon_url": "cta_icons/m48-appl-of-ai-for-anomaly-detection-256px-grn.png",
+        "icon_file": "m48-appl-of-ai-for-anomaly-detection-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s12_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P13",
+    "industry": "All Industries",
+    "workload": "Data Center / Cloud, MLOps",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "GPU Operator",
+        "snippet": "Automate drivers, runtime, plugins, and monitoring for GPU clusters.",
+        "link": "https://nvidia.github.io/gpu-operator/",
+        "icon_url": "cta_icons/m48-gpu-architecture-256px-grn.png",
+        "icon_file": "m48-gpu-architecture-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s13_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Enterprise RAG",
+        "snippet": "Production-ready RAG blueprint with NVIDIA AI components.",
+        "link": "https://build.nvidia.com/nvidia/build-an-enterprise-rag-pipeline/blueprintcard",
+        "icon_url": "cta_icons/m48-retrieval-augmented-generation-256px-grn.png",
+        "icon_file": "m48-retrieval-augmented-generation-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s13_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "RDMA Networking",
+        "snippet": "GPUDirect, InfiniBand, RDMA, and Kubernetes networking quick start.",
+        "link": "https://docs.nvidia.com/networking/display/kubernetes2611/quick-start/quick-start-k8s.html",
+        "icon_url": "cta_icons/m48-high-connection-density-256px-grn.png",
+        "icon_file": "m48-high-connection-density-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s13_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P14",
+    "industry": "Academia / Education",
+    "workload": "Agentic AI / Generative AI, Other",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Speech APIs",
+        "snippet": "Speech and voice tools for learning experiences.",
+        "link": "https://build.nvidia.com/explore/speech",
+        "icon_url": "cta_icons/m48-speech-recognition-256px-grn.png",
+        "icon_file": "m48-speech-recognition-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s14_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "NeMo Guardrails",
+        "snippet": "Safety, jailbreak protection, and controls for AI tutors.",
+        "link": "https://developer.nvidia.com/nemo-guardrails",
+        "icon_url": "cta_icons/m48-shield-256px-grn.png",
+        "icon_file": "m48-shield-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s14_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "RAG Study Agent",
+        "snippet": "Hands-on Nemotron-powered RAG agent tutorial.",
+        "link": "https://developer.nvidia.com/blog/build-a-rag-agent-with-nvidia-nemotron/",
+        "icon_url": "cta_icons/m48-building-rag-agent-with-large-language-model-256px-grn.png",
+        "icon_file": "m48-building-rag-agent-with-large-language-model-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s14_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P15",
+    "industry": "Aerospace, Automotive / Transportation, Manufacturing (CAE / EDA)",
+    "workload": "Agentic AI / Generative AI, Simulation / Modeling / Design",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "NeMo Agent Toolkit",
+        "snippet": "Engineering assistants and chip design automation agents.",
+        "link": "https://developer.nvidia.com/nemo-agent-toolkit",
+        "icon_url": "cta_icons/m48-electronic-design-automation-256px-grn.png",
+        "icon_file": "m48-electronic-design-automation-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s15_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Confidential Containers",
+        "snippet": "Protect proprietary design data and AI workloads.",
+        "link": "https://docs.nvidia.com/datacenter/cloud-native/confidential-containers/latest/confidential-containers-deploy.html",
+        "icon_url": "cta_icons/m48-containerized-security-256px-grn.png",
+        "icon_file": "m48-containerized-security-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s15_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "DOCA Getting Started",
+        "snippet": "BlueField offload for networking, storage, and security services.",
+        "link": "https://developer.nvidia.com/networking/doca/getting-started",
+        "icon_url": "cta_icons/m48-dpu-chip-text-256px-grn.png",
+        "icon_file": "m48-dpu-chip-text-256px-grn.png",
+        "status": "Suggested",
+        "code": "tk_s15_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P16",
+    "industry": "All Industries",
+    "workload": "Data Science",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "cuDF",
+        "snippet": "Faster pandas-style data workflows on GPU.",
+        "link": "https://developer.nvidia.com/topics/ai/data-science/cuda-x-data-science-libraries/cudf",
+        "icon_url": "cta_icons/m48-data-loading-library-256px-grn.png",
+        "icon_file": "m48-data-loading-library-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s16_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "cuML",
+        "snippet": "GPU-accelerated machine learning training and analytics.",
+        "link": "https://developer.nvidia.com/topics/ai/data-science/cuda-x-data-science-libraries/cuml",
+        "icon_url": "cta_icons/m48-optimized-training-256px-grn.png",
+        "icon_file": "m48-optimized-training-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s16_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "nx-cugraph",
+        "snippet": "Fast graph analytics for very large graphs.",
+        "link": "https://rapids.ai/nx-cugraph/",
+        "icon_url": "cta_icons/m48-neural-network-3-256px-grn.png",
+        "icon_file": "m48-neural-network-3-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s16_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P17",
+    "industry": "All Industries",
+    "workload": "Trustworthy AI / Cybersecurity",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "NemoClaw Install",
+        "snippet": "Controlled always-on agents with privacy and behavior safeguards.",
+        "link": "https://build.nvidia.com/nemoclaw/install",
+        "icon_url": "cta_icons/m48-customization-256px-grn.png",
+        "icon_file": "m48-customization-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s17_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "NeMo Guardrails Docs",
+        "snippet": "Policy, grounding, PII, and safety checks for AI systems.",
+        "link": "https://docs.nvidia.com/nemo/microservices/25.12.0/set-up/deploy-as-microservices/guardrails/index.html",
+        "icon_url": "cta_icons/m48-privacy-settings-256px-grn.png",
+        "icon_file": "m48-privacy-settings-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s17_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "Container Security NIM",
+        "snippet": "Analyze container vulnerabilities and remediation guidance.",
+        "link": "https://build.nvidia.com/nvidia/vulnerability-analysis-for-container-security/nim",
+        "icon_url": "cta_icons/m48-software-stack-container-256px-grn.png",
+        "icon_file": "m48-software-stack-container-256px-grn.png",
+        "status": "Confirmed",
+        "code": "tk_s17_c3_0626.png"
+      }
+    ]
+  },
+  {
+    "priority": "P18",
+    "industry": "All Industries",
+    "workload": "Agentic AI / Generative AI",
+    "ctas": [
+      {
+        "label": "CTA 1",
+        "title": "Research Agent Launchable",
+        "snippet": "Spin up a custom research agent connected to your own data.",
+        "link": "https://brev.nvidia.com/launchable/deploy?launchableID=env-2y9mLGTtOuAHzLbXu3xUY5HLckY&ncid=em-nurt-200645-vt53",
+        "icon_url": "cta_icons/m48-research-256px-grn.png",
+        "icon_file": "m48-research-256px-grn.png",
+        "status": "Suggested",
+        "code": "tk_s18_c1_0626.png"
+      },
+      {
+        "label": "CTA 2",
+        "title": "Sandboxed Agent Launchable",
+        "snippet": "Launch a sandboxed agent environment on Brev.",
+        "link": "https://brev.nvidia.com/launchable/deploy?launchableID=env-3Azt0aYgVNFEuz7opyx3gscmowS",
+        "icon_url": "cta_icons/m48-containerized-model-256px-grn.png",
+        "icon_file": "m48-containerized-model-256px-grn.png",
+        "status": "Suggested",
+        "code": "tk_s18_c2_0626.png"
+      },
+      {
+        "label": "CTA 3",
+        "title": "Nemotron Coding Tools",
+        "snippet": "Agentic coding workflows with Nemotron 3 Super.",
+        "link": "https://docs.nvidia.com/nemotron/latest/usage-cookbook/Nemotron-3-Super/OpenScaffoldingResources/README.html",
+        "icon_url": "cta_icons/m48-coding-256px-grn.png",
+        "icon_file": "m48-coding-256px-grn.png",
+        "status": "Suggested",
+        "code": "tk_s18_c3_0626.png"
+      }
+    ]
+  }
+]
