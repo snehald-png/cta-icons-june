@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TRAIL Kits : CTA Picker (Industry × Workload)</title>
+<title>Inception Recommendations</title>
 <style>
   :root {
     --bg: #f7f8fa;
@@ -233,7 +233,7 @@
 </head>
 <body>
 <header>
-  <h1>TRAIL Kits : CTA Picker</h1>
+  <h1>Inception Recommendations</h1>
   <p class="subtitle">Pick an Industry and a Workload to see the matching CTAs.</p>
 </header>
 
@@ -305,37 +305,30 @@ function buildSelect(selectEl, items, preserveValue) {
   }
 }
 
-// Special wildcards. "All Industries" / "Cross-industry" priorities should
-// match any specific user-industry pick.
-const IND_WILDCARDS = new Set(["All Industries", "Cross-industry", "All", "Any"]);
-const WL_WILDCARDS = new Set(["All Workloads", "Any"]);
-
+// Strict matching: the user-picked industry/workload must appear literally
+// in the priority's tokenized list. We do NOT expand "All Industries" as a
+// wildcard, so picking a specific industry only surfaces workloads that the
+// document explicitly attaches to that industry. To see cross-industry
+// priorities (P16 Data Science, P17 Trustworthy AI, P18 Agentic AI), pick
+// "All Industries" as the industry.
 function industryCovers(section, userIndustry) {
   if (!userIndustry) return true;
-  const inds = splitTokens(section.industry);
-  if (inds.some(t => IND_WILDCARDS.has(t))) return true;
-  return inds.includes(userIndustry);
+  return splitTokens(section.industry).includes(userIndustry);
 }
 
 function workloadCovers(section, userWorkload) {
   if (!userWorkload) return true;
-  const wls = splitTokens(section.workload);
-  if (wls.some(t => WL_WILDCARDS.has(t))) return true;
-  return wls.includes(userWorkload);
+  return splitTokens(section.workload).includes(userWorkload);
 }
 
 function priorityMatches(section, userIndustry, userWorkload) {
   return industryCovers(section, userIndustry) && workloadCovers(section, userWorkload);
 }
 
-// Compute which workload tags are reachable given the current industry pick.
-// Includes workloads from "All Industries" priorities so cross-industry CTAs
-// always surface.
 function workloadsForIndustry(userIndustry) {
   return uniqueSorted(
     DATA.filter(s => industryCovers(s, userIndustry))
         .flatMap(s => splitTokens(s.workload))
-        .filter(t => !WL_WILDCARDS.has(t))
   );
 }
 
@@ -343,7 +336,6 @@ function industriesForWorkload(userWorkload) {
   return uniqueSorted(
     DATA.filter(s => workloadCovers(s, userWorkload))
         .flatMap(s => splitTokens(s.industry))
-        .filter(t => !IND_WILDCARDS.has(t))
   );
 }
 
