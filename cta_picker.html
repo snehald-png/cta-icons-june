@@ -456,11 +456,7 @@ function applyFilter() {
     return;
   }
 
-  summary.innerHTML =
-    `<strong>${total}</strong> priorit${total === 1 ? "y" : "ies"} matched ` +
-    `(<strong>${totalCtas}</strong> CTA${totalCtas === 1 ? "" : "s"}) for ` +
-    `<strong>${escapeHtml(userIndustry || "(any industry)")}</strong> × ` +
-    `<strong>${escapeHtml(userWorkload || "(any workload)")}</strong>.`;
+  summary.innerHTML = "";
   results.innerHTML = matches.map(s => renderSection(s, userIndustry)).join("");
 }
 
