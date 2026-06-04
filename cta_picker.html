@@ -326,14 +326,16 @@ function isVisibleToken(t) {
   return t && !HIDDEN_TOKENS.has(t) && t !== ALL_INDUSTRIES;
 }
 
-// Rebuild a cell value with hidden tokens removed but original comma/slash
-// grouping preserved (commas separate sub-groups, slashes separate within).
+// Rebuild a cell value with HIDDEN_TOKENS removed but original comma/slash
+// grouping preserved. We keep "All Industries" in section-header display
+// (so cross-industry rows show *something* in their h2) — it's still
+// filtered from the dropdown options separately.
 function cleanForDisplay(s) {
   if (!s) return "";
   return s.split(",")
     .map(chunk => chunk.split("/")
       .map(t => t.trim())
-      .filter(isVisibleToken)
+      .filter(t => t && !HIDDEN_TOKENS.has(t))
       .join(" / ")
     )
     .filter(chunk => chunk.length > 0)
