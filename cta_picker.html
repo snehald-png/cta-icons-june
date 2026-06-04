@@ -410,14 +410,19 @@ function renderCard(cta) {
   `;
 }
 
-function renderSection(section) {
+function renderSection(section, userIndustry) {
   const cards = (section.ctas || []).map(renderCard).join("");
-  const cleanIndustry = cleanForDisplay(section.industry);
+  // If the user has picked a specific industry, show just that token in
+  // the section header — even for "All Industries" wildcard rows. Falls
+  // back to the cleaned full industry list when nothing is picked.
+  const industryDisplay = userIndustry
+    ? userIndustry
+    : cleanForDisplay(section.industry);
   return `
     <section class="priority-section">
       <div class="priority-header">
         <div class="priority-header-text">
-          <h2>${escapeHtml(cleanIndustry)}</h2>
+          <h2>${escapeHtml(industryDisplay)}</h2>
         </div>
       </div>
       <div class="row">${cards}</div>
@@ -456,7 +461,7 @@ function applyFilter() {
     `(<strong>${totalCtas}</strong> CTA${totalCtas === 1 ? "" : "s"}) for ` +
     `<strong>${escapeHtml(userIndustry || "(any industry)")}</strong> × ` +
     `<strong>${escapeHtml(userWorkload || "(any workload)")}</strong>.`;
-  results.innerHTML = matches.map(renderSection).join("");
+  results.innerHTML = matches.map(s => renderSection(s, userIndustry)).join("");
 }
 
 async function loadAndInit() {
