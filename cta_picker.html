@@ -413,13 +413,11 @@ function renderCard(cta) {
 function renderSection(section) {
   const cards = (section.ctas || []).map(renderCard).join("");
   const cleanIndustry = cleanForDisplay(section.industry);
-  const cleanWorkload = cleanForDisplay(section.workload);
   return `
     <section class="priority-section">
       <div class="priority-header">
         <div class="priority-header-text">
           <h2>${escapeHtml(cleanIndustry)}</h2>
-          <div class="priority-workload">${escapeHtml(cleanWorkload)}</div>
         </div>
         <span class="priority-tag">${escapeHtml(section.priority || "")}</span>
       </div>
